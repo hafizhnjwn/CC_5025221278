@@ -11,7 +11,7 @@ while true;
 do
 	date=$(date '+%Y-%m-%d_%H:%M:%S')
 	echo processing at $date
-	fname="output_$date.txt"
+	fname="$LOKASI/output_$date.txt"
 	curl -sL $URL | jq '.value' > $fname 
 	sleep $DELAY
 done
