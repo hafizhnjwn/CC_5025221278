@@ -17,20 +17,6 @@ services:
     networks:
       - example1-network
 
-  mysql1:
-    image: mysql:5.7-debian
-    restart: unless-stopped
-    environment:
-      - MYSQL_DATABASE=mydb
-      - MYSQL_PASSWORD=mydb6789tyui
-      - MYSQL_ROOT_PASSWORD=mydb6789tyui
-      - MYSQL_ROOT_HOST=%
-    volumes:
-      - ./dbdata:/var/lib/mysql
-      - ./dbscripts:/dbscripts
-    networks:
-      - example1-network
-
   app:
     restart: unless-stopped
     build:
@@ -50,25 +36,6 @@ services:
       - ./platform/php.ini:/etc/php7/php.ini
     extra_hosts:
       - "test:10.199.2.29"
-    networks:
-      - example1-network
-
-  alpine:
-    image: alpine:3.18
-    command:
-      - /bin/sh
-      - -c
-      - 'while true;do sleep 10000;done'
-    networks:
-      - example1-network
-
-  phpmyadmin:
-    image: phpmyadmin:5.2.1-apache
-    links:
-      - mysql1
-    environment:
-      - PMA_HOST=mysql1
-      - MYSQL_ROOT_PASSWORD=mydb6789tyui
     networks:
       - example1-network
 
