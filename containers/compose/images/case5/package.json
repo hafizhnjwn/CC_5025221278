@@ -1,0 +1,12 @@
+{
+  "name": "case4-asset-builder",
+  "version": "1.0.0",
+  "description": "Membangun aset statis untuk produksi",
+  "private": true,
+  "scripts": {
+    "build": "echo '--- Menjalankan proses build aset (SASS/Webpack/dll) ---' && mkdir -p html/assets/dist/css && echo '.built-by-npm { color: green; }' > html/assets/dist/css/production.css && echo '--- Build selesai ---'"
+  },
+  "devDependencies": {
+    "sass": "^1.50.0"
+  }
+}
