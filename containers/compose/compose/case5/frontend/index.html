@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FE/BE Split</title>
+</head>
+<body>
+    <h1>Selamat Datang di Frontend!</h1>
+    <button id="apiButton">Panggil API Backend</button>
+    <pre id="apiResponse"></pre>
+
+    <script>
+        document.getElementById('apiButton').addEventListener('click', () => {
+            const responseElement = document.getElementById('apiResponse');
+            responseElement.textContent = 'Memanggil backend...';
+
+            fetch('/api/index.php')
+                .then(response => response.json())
+                .then(data => {
+                    responseElement.textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    responseElement.textContent = 'Error: ' + error;
+                });
+        });
+    </script>
+</body>
+</html>

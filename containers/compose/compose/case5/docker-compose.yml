@@ -8,13 +8,13 @@ services:
     volumes:
       - ./proxy/nginx.conf:/etc/nginx/nginx.conf
       - ./proxy/ssl:/etc/nginx/ssl
-      - ./src:/var/www/localhost/htdocs/  
+      - ./frontend:/var/www/frontend  
     depends_on:
-      - app          
+      - backend             
     networks:
       - example1-network
 
-  app:
+  backend:
     restart: unless-stopped
     build:
       context: ./platform
@@ -22,7 +22,7 @@ services:
     environment:
       - MODE=development
     volumes:
-      - ./src:/var/www/localhost/htdocs/
+      - ./backend:/var/www/localhost/htdocs/
       - ./platform/httpd.conf:/etc/apache2/httpd.conf
       - ./platform/ssl.conf:/etc/apache2/conf.d/ssl.conf
       - ./platform/log:/var/log/
