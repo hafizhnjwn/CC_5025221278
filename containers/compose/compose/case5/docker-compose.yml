@@ -1,20 +1,15 @@
-# docker-compose.yml
 version: '3'
 
 services:
-  # LAYANAN BARU: REVERSE PROXY (NGINX)
   proxy:
     image: nginx:latest
     container_name: my_app_proxy
     ports:
-      - "8081:80"     # Port publik untuk HTTP
-      - "8443:443"   # Port publik untuk HTTPS
+      - "8081:80"    
+      - "8443:443"   
     volumes:
-      # 1. Mount konfigurasi Nginx kustom kita
       - ./proxy/nginx.conf:/etc/nginx/nginx.conf
-      # 2. Mount sertifikat SSL
       - ./proxy/ssl:/etc/nginx/ssl
-      # 3. Mount 'src' agar Nginx bisa sajikan file statis (CSS/JS/Gambar)
       - ./src:/var/www/localhost/htdocs/ 
     depends_on:
       - app
@@ -22,7 +17,6 @@ services:
     networks:
       - example1-network
 
-  # --- Layanan Asli Milikmu ---
   mysql1:
     image: mysql:5.7-debian
     restart: unless-stopped
@@ -42,9 +36,6 @@ services:
     build:
       context: ./platform
       dockerfile: Dockerfile
-    # PORTS DIHAPUS. Nginx akan menanganinya.
-    # ports:
-    #   - "34001:80"
     environment:
       - MODE=development
       - MYSQL_DATABASE=mydb
@@ -73,9 +64,6 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:5.2.1-apache
-    # PORTS DIHAPUS. Nginx akan menanganinya.
-    # ports:
-    #   - "10000:80"
     links:
       - mysql1
     environment:
